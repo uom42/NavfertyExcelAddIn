@@ -30,7 +30,7 @@ namespace NavfertyExcelAddIn.ParseNumerics
 			=> (_currencyRu == Currency);
 
 		/// <summary>This code is sample from internet - WAS NOT CHECKED!!!</summary>
-		private static string GetCurrencyFormat(CultureInfo culture = null)
+		private static string GetExcelCurrencyFormatString(CultureInfo culture = null)
 		{
 			if (culture == null) culture = CultureInfo.CurrentCulture;
 
