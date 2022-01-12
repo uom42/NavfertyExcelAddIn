@@ -26,17 +26,18 @@ namespace NavfertyExcelAddIn.ParseNumerics
 					(value, cell) =>
 					 {
 						 var pdResult = value.ParseDecimal();
-						 if (null == pdResult || !pdResult.ConvertedValue.HasValue)
+						 if (!pdResult.HasValue || !pdResult.Value.ConvertedValue.HasValue)
 							 return (object)value;
 
+						 var npr = pdResult.Value;
 						 //Parsed Ok...
-						 if (pdResult.IsMoney)
+						 if (pdResult.Value.IsMoney)
 						 {
-							 string currencyFormat = pdResult.IsCurrencyFromRU() ? EXCEL_CURRENCY_FORMAT_TEMPLATE_RUS : EXCEL_CURRENCY_FORMAT_TEMPLATE_LAT;
-							 string curSymFmt = @"[$" + pdResult.Currency + @"]";
+							 string currencyFormat = npr.IsCurrencyFromRU() ? EXCEL_CURRENCY_FORMAT_TEMPLATE_RUS : EXCEL_CURRENCY_FORMAT_TEMPLATE_LAT;
+							 string curSymFmt = @"[$" + npr.Currency + @"]";
 							 cell.NumberFormat = currencyFormat.Replace(CURRENCY_TEMPLATE, curSymFmt);
 						 }
-						 return (object)Convert.ToDouble(pdResult.ConvertedValue.Value);// Excel stores numerics as Double
+						 return (object)Convert.ToDouble(npr.ConvertedValue.Value);// Excel stores numerics as Double
 					 });
 			}
 			finally

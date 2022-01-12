@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace NavfertyExcelAddIn.ParseNumerics
 {
-	public class NumericParseResult
+	public struct NumericParseResult
 	{
 		private static readonly string currencySymbolFromOSUserLocale = CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol;
 		private static readonly string currencySymbolRu = CultureInfo.GetCultureInfo("ru").NumberFormat.CurrencySymbol;
 
-		public readonly decimal? ConvertedValue = null;
-		public readonly string Currency = "";
+		public readonly decimal? ConvertedValue;
+		public readonly string Currency;
 
 		public NumericParseResult(decimal? value, string curr = null)
 		{
@@ -30,6 +30,8 @@ namespace NavfertyExcelAddIn.ParseNumerics
 		public bool IsCurrencyFromRU()
 			=> (currencySymbolRu == Currency);
 
+		/*
+		 
 		public static bool operator ==(NumericParseResult obj1, NumericParseResult obj2)
 		{
 			if ((obj1 is null) && (obj2 is null)) return true;
@@ -53,7 +55,7 @@ namespace NavfertyExcelAddIn.ParseNumerics
 		public override bool Equals(object obj)
 			=> !(obj is null) && (obj.GetType() == typeof(NumericParseResult) && (this == obj as NumericParseResult));
 
-
+		*/
 
 	}
 }

@@ -17,7 +17,7 @@ namespace NavfertyExcelAddIn.ParseNumerics
 		private static readonly Regex DecimalPattern = new Regex(@"[\d\.\,\s]+");
 		private static readonly Regex ExponentPattern = new Regex(@"[-+]?\d*\.?\d+[eE][-+]?\d+");
 
-		public static NumericParseResult ParseDecimal(this string value)
+		public static NumericParseResult? ParseDecimal(this string value)
 		{
 			if (string.IsNullOrWhiteSpace(value))
 			{
@@ -42,7 +42,7 @@ namespace NavfertyExcelAddIn.ParseNumerics
 				var c = v[last];
 				return v.CountChars(c) == 1
 					? v.TryParse(c == '.' ? Format.Dot : Format.Comma)
-					: null;
+					: (NumericParseResult?)null;
 			}
 
 			if (v.Contains(","))
@@ -81,7 +81,7 @@ namespace NavfertyExcelAddIn.ParseNumerics
 		.Where(cur => !string.IsNullOrWhiteSpace(cur))
 		.ToArray());
 
-		private static NumericParseResult TryParse(this string value, Format info)
+		private static NumericParseResult? TryParse(this string value, Format info)
 		{
 			var formatInfo = (NumberFormatInfo)NumberFormatInfo.InvariantInfo.Clone();
 
@@ -123,7 +123,7 @@ namespace NavfertyExcelAddIn.ParseNumerics
 				}
 				//It was not possible to parse the line, even after removing the currencySymbol, most likely this is not about money at all...
 			}
-			return null;//Not found any currency symbols, or found more than one, or even not number...
+			return (NumericParseResult?)null;//Not found any currency symbols, or found more than one, or even not number...
 		}
 
 		private enum Format
