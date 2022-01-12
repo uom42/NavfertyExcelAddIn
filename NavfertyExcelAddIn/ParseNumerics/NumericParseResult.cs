@@ -19,7 +19,7 @@ namespace NavfertyExcelAddIn.ParseNumerics
 		public NumericParseResult(decimal? value, string curr = "")
 		{
 			ConvertedValue = value;
-			if (null != curr) Currency = curr.Trim();
+			if (null != curr) Currency = curr;
 			IsMoney = (null != Currency && !string.IsNullOrEmpty(Currency));
 		}
 

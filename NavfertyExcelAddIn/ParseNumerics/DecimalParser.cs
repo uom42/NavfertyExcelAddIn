@@ -75,11 +75,11 @@ namespace NavfertyExcelAddIn.ParseNumerics
 		}
 
 		private static Lazy<string[]> _allCurrencySymbolsCacheLazy = new Lazy<string[]>(()
-			=> (from ci in CultureInfo.GetCultures(CultureTypes.AllCultures)
-				let curSymb = ci.NumberFormat.CurrencySymbol
-				where (null != curSymb && !string.IsNullOrWhiteSpace(curSymb.Trim()))
-				orderby curSymb ascending
-				select curSymb).Distinct().ToArray());
+			=> CultureInfo.GetCultures(CultureTypes.AllCultures)
+		.Select(ci => ci.NumberFormat.CurrencySymbol)
+		.Distinct()
+		.Where(cur => !string.IsNullOrWhiteSpace(cur))
+		.ToArray());
 
 		private static NumericParseResult TryParse(this string value, Format info)
 		{
